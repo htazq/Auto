@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Check if Docker is already installed
+if command -v docker >/dev/null 2>&1 && command -v docker-compose >/dev/null 2>&1; then
+  echo "Docker is already installed."
+  exit 0
+fi
+
 # Check if system is Debian or Ubuntu
 if [[ $(lsb_release -is) == "Debian" ]]; then
   # Update system packages

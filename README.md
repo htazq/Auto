@@ -4,7 +4,7 @@
 
 食用方法：     
 
-全自动安装npm：bash <(wget -qO- -o- https://raw.githubusercontent.com/htazq/Auto/main/auto.sh)
+全自动安装Docker以及解决vi：bash <(wget -qO- -o- https://raw.githubusercontent.com/htazq/Auto/main/auto.sh)
 
 全自动安装Docker：bash <(wget -qO- -o- https://raw.githubusercontent.com/htazq/Auto/main/Auto-Install-Docker.sh)
 

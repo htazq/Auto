@@ -11,7 +11,32 @@ import (
 
 // 同步文件夹A到文件夹B
 func syncFolders(folderA, folderB string) {
-	err := filepath.Walk(folderA, func(pathA string, info os.FileInfo, err error) error {
+	// 删除文件夹B中不再存在于文件夹A中的文件和文件夹
+	err := filepath.Walk(folderB, func(pathB string, info os.FileInfo, err error) error {
+		if err != nil {
+			fmt.Printf("访问文件夹B中的文件/文件夹时出错：%v\n", err)
+			return nil
+		}
+
+		// 构造对应的文件夹A中的路径
+		pathA := filepath.Join(folderA, pathB[len(folderB):])
+
+		if _, err := os.Stat(pathA); os.IsNotExist(err) {
+			// 删除文件夹B中的文件/文件夹
+			err := os.RemoveAll(pathB)
+			if err != nil {
+				fmt.Printf("删除文件/文件夹时出错：%v\n", err)
+			}
+		}
+
+		return nil
+	})
+	if err != nil {
+		fmt.Printf("访问文件夹B时出错：%v\n", err)
+	}
+
+	// 复制文件夹A中的文件/文件夹到文件夹B
+	err = filepath.Walk(folderA, func(pathA string, info os.FileInfo, err error) error {
 		if err != nil {
 			fmt.Printf("访问文件夹A中的文件/文件夹时出错：%v\n", err)
 			return nil

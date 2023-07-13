@@ -33,7 +33,8 @@ if command -v nvm &>/dev/null; then
     # 加载配置文件
     echo "加载配置文件: $CONFIG_FILE"
     source "$CONFIG_FILE"
-
+    source ~/.bashrc
+    
     echo "配置文件加载完成！"
 else
     echo "nvm 安装失败。"

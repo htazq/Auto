@@ -11,4 +11,5 @@ cat <<EOF > ~/.vimrc
 set nocompatible
 set backspace=2
 set number
+syntax on
 EOF

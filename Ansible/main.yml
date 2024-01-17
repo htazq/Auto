@@ -1,6 +1,6 @@
 ---
 - name: Configure SSH on Remote Hosts
-  hosts: servers
+  hosts: all
   become: true
   gather_facts: false
 
@@ -14,8 +14,7 @@
       authorized_key:
         user: "{{ ansible_ssh_user }}"
         key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
-      with_items: "{{ ansible_play_hosts }}"
-      when: inventory_hostname == ansible_play_hosts | first
+
 
 ---
 - name: Execute Commands on All Hosts

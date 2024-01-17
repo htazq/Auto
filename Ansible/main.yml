@@ -1,22 +1,4 @@
 ---
-- name: Configure SSH on Remote Hosts
-  hosts: all
-  become: true
-  gather_facts: false
-
-  tasks:
-    - name: Generate SSH key pair
-      command: "ssh-keygen -t rsa -b 4096"
-      args:
-        creates: "{{ ansible_user_dir }}/.ssh/id_rsa"
-
-    - name: Copy SSH public key to remote hosts
-      authorized_key:
-        user: "{{ ansible_ssh_user }}"
-        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
-
-
----
 - name: Execute Commands on All Hosts
   hosts: all
   become: true

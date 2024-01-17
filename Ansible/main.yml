@@ -4,17 +4,9 @@
   become: true
   gather_facts: false  # Disable gathering facts initially
   tasks:
-
     - name: APT INSTALL py3 curl wget net-tools screen htop
-      apt:
-        name:
-          - python3
-          - curl
-          - wget
-          - net-tools
-          - screen
-          - htop
-        state: present
+      raw: "apt-get install -y python3 curl wget net-tools screen htop"
+
 
     - name: Run custom script via bash command
       raw: "curl -sSL https://raw.githubusercontent.com/htazq/Auto/main/Auto-Vi.sh | bash"

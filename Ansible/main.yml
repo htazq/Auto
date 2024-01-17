@@ -1,0 +1,49 @@
+---
+- name: Configure SSH on Remote Hosts
+  hosts: servers
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: Generate SSH key pair
+      command: "ssh-keygen -t rsa -b 4096"
+      args:
+        creates: "{{ ansible_user_dir }}/.ssh/id_rsa"
+
+    - name: Copy SSH public key to remote hosts
+      authorized_key:
+        user: "{{ ansible_ssh_user }}"
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+      with_items: "{{ ansible_play_hosts }}"
+      when: inventory_hostname == ansible_play_hosts | first
+
+---
+- name: Execute Commands on All Hosts
+  hosts: all
+  become: true
+  gather_facts: false  # Disable gathering facts initially
+  tasks:
+
+    - name: APT INSTALL py3 curl wget net-tools screen htop
+      apt:
+        name:
+          - python3
+          - curl
+          - wget
+          - net-tools
+          - screen
+          - htop
+        state: present
+
+    - name: Run custom script via bash command
+      raw: "curl -sSL https://raw.githubusercontent.com/htazq/Auto/main/Auto-Vi.sh | bash"
+    
+    - name: Update apt packages
+      apt:
+        update_cache: yes
+    
+    - name: Upgrade apt packages
+      apt:
+        upgrade: dist
+        autoremove: yes
+        autoclean: yes

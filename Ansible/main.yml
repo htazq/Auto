@@ -7,12 +7,17 @@
     - name: APT INSTALL py3 curl wget net-tools screen htop
       raw: "apt-get install -y python3 curl wget net-tools screen htop jq"
 
+    - name: Run custom script via bash command
+      raw: "curl -sSL https://raw.githubusercontent.com/htazq/Auto/main/Auto-Vi.sh | bash"
+
     - name: Change server hostname"cpu-memory-disk-region-ip"
       raw: "bash <(wget -qO- -o- https://raw.githubusercontent.com/htazq/Auto/main/change_hostname.sh)"
 
-    - name: Run custom script via bash command
-      raw: "curl -sSL https://raw.githubusercontent.com/htazq/Auto/main/Auto-Vi.sh | bash"
-    
+    - name: Update known_hosts
+      shell: "ssh-keyscan -H {{ inventory_hostname }} >> ~/.ssh/known_hosts"
+      delegate_to: localhost
+      run_once: true
+
     - name: Update apt packages
       apt:
         update_cache: yes

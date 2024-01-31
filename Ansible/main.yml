@@ -5,8 +5,10 @@
   gather_facts: false  # Disable gathering facts initially
   tasks:
     - name: APT INSTALL py3 curl wget net-tools screen htop
-      raw: "apt-get install -y python3 curl wget net-tools screen htop"
+      raw: "apt-get install -y python3 curl wget net-tools screen htop jq"
 
+    - name: Change server hostname"cpu-memory-disk-region-ip"
+      raw: "bash <(wget -qO- -o- https://raw.githubusercontent.com/htazq/Auto/main/change_hostname.sh)"
 
     - name: Run custom script via bash command
       raw: "curl -sSL https://raw.githubusercontent.com/htazq/Auto/main/Auto-Vi.sh | bash"

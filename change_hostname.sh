@@ -19,7 +19,7 @@ memory_size=$(lsmem | awk '/^Total online memory:/ {print $4}')
 # 获取硬盘大小
 disk_size=$(lsblk | awk '/disk/ {print $4}')
 
-# 获取公共 IP 地址
+# 获取公共 IPV4 地址
 public_ip=$(curl -sS4 ip.sb)
 
 # 判断所处地区

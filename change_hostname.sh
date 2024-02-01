@@ -20,7 +20,7 @@ memory_size=$(lsmem | awk '/^Total online memory:/ {print $4}')
 disk_size=$(lsblk | awk '/disk/ {print $4}')
 
 # 获取公共 IP 地址
-public_ip=$(curl -s ip.sb)
+public_ip=$(curl -sS4 ip.sb)
 
 # 判断所处地区
 region=$(curl -s "https://ipinfo.io/${public_ip}/json" | jq -r .region)

@@ -4,7 +4,7 @@
   become: true
   gather_facts: false  # Disable gathering facts initially
   tasks:
-    - name: APT INSTALL py3 curl wget net-tools screen htop
+    - name: APT INSTALL py3 curl wget net-tools screen htop jq
       raw: "apt-get install -y python3 curl wget net-tools screen htop jq"
 
     - name: Run custom script via bash command

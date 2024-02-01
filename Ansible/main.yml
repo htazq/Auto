@@ -10,7 +10,7 @@
     - name: Run custom script via bash command
       raw: "curl -sSL https://raw.githubusercontent.com/htazq/Auto/main/Auto-Vi.sh | bash"
 
-    - name: Change server hostname"cpu-memory-disk-region-ip"
+    - name: Change server hostname to "cpu-memory-disk-region-ip"
       raw: "bash <(wget -qO- -o- https://raw.githubusercontent.com/htazq/Auto/main/change_hostname.sh)"
 
     - name: Update known_hosts

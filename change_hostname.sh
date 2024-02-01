@@ -1,8 +1,14 @@
 #!/bin/bash
 
-# 安装 curl 和 jq
-apt-get update
-apt-get install -y curl jq
+# 检查是否已安装 curl 和 jq
+if command -v curl &> /dev/null && command -v jq &> /dev/null
+then
+    echo "curl and jq are already installed. Skipping installation."
+else
+    # 安装 curl 和 jq
+    apt-get update
+    apt-get install -y curl jq
+fi
 
 # 获取CPU核心数
 cpu_cores=$(lscpu | grep 'CPU(s):' | awk '{print $2}' | head -n 1)
@@ -14,7 +20,7 @@ memory_size=$(lsmem | awk '/^Total online memory:/ {print $4}')
 disk_size=$(lsblk | awk '/disk/ {print $4}')
 
 # 获取公共 IP 地址
-public_ip=$(curl -s https://api64.ipify.org?format=json | jq -r .ip)
+public_ip=$(curl -s ip.sb)
 
 # 判断所处地区
 region=$(curl -s "https://ipinfo.io/${public_ip}/json" | jq -r .region)

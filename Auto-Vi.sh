@@ -1,19 +1,10 @@
 #!/bin/bash
 
-# 判断是否已安装 vim
-if command -v vim &> /dev/null
-then
-    echo "Vim is already installed. Skipping installation."
-else
-    # 卸载 vim-common 包
-    if dpkg -l | grep -q vim-common
-    then
-        sudo apt-get remove -y vim-common
-    fi
+sudo apt-get remove -y vim-common
 
-    # 安装 vim 包
-    sudo apt-get install -y vim
-fi
+sudo apt-get install -y vim-full
+
+sudo apt-get install -y vim
 
 # 判断是否已存在 .vimrc 文件
 if [ -e ~/.vimrc ]

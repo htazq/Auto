@@ -22,14 +22,6 @@ parser.add_argument("--visualize-only", action="store_true", help="仅进行数�
 parser.add_argument("--disk-path", default="/dev/sdc", help="测试磁盘的路径，默认为 /dev/sdc。")
 args = parser.parse_args()
 
-# 检查并安装必要的工具
-def check_and_install_tools():
-    try:
-        subprocess.run(["yum", "install", "-y", "fio", "libaio"], check=True)
-    except subprocess.CalledProcessError as e:
-        log_error(f"工具安装失败: {e}")
-        exit(1)
-
 # 记录错误日志
 def log_error(message):
     with open(ERROR_LOG, "a") as log_file:
@@ -99,7 +91,6 @@ def extract_and_print_data(json_files):
 # 主程序
 if __name__ == "__main__":
     if not args.visualize_only:
-        check_and_install_tools()
         run_fio_tests(args.disk_path)
     
     json_files = glob.glob(os.path.join(OUTPUT_DIR, '*.json'))

@@ -66,7 +66,7 @@ def run_fio_tests(filename: str):
                 
                 try:
                     subprocess.run(fio_cmd, check=True)
-                
+                    time.sleep(5)
                 except subprocess.CalledProcessError as e:
                     log_error(f"FIO 测试失败: {e}")
                     continue  # 跳过当前测试，继续下一个

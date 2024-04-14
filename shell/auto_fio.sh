@@ -76,6 +76,11 @@ print_and_save_results() {
 main() {
   check_and_install_fio_libaio_jq
 
+  echo "1.脚本会检查并安装fio、libaio和jq工具，如果未安装，脚本会自动尝试安装它们"
+  echo "2.运行脚本时，系统会提示您输入要测试的磁盘路径。默认是 /dev/sdc，如果要测试其他磁盘，请输入相应的磁盘路径"
+  echo "3.系统会提示您输入存放测试结果的输出目录。如果留空，则使用默认目录（例如sdb_fio_results）。如果目录不存在，脚本会创建它。如果已存在，脚本会直接在该目录下生成或更新结果文件."
+  echo "4.测试完成后，结果将被保存为CSV格式的文件，并在终端打印出来。您可以使用 column -s, -t < 文件路径 | less -#2 -N -S 命令来以表格形式查看结果。"
+
   read -p "请输入测试磁盘路径 [/dev/sdc]: " input
   FILENAME=${input:-$FILENAME}
 

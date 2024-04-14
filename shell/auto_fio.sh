@@ -80,6 +80,8 @@ main() {
   echo "2.运行脚本时，系统会提示您输入要测试的磁盘路径。默认是 /dev/sdc，如果要测试其他磁盘，请输入相应的磁盘路径"
   echo "3.系统会提示您输入存放测试结果的输出目录。如果留空，则使用默认目录（例如sdb_fio_results）。如果目录不存在，脚本会创建它。如果已存在，脚本会直接在该目录下生成或更新结果文件."
   echo "4.测试完成后，结果将被保存为CSV格式的文件，并在终端打印出来。您可以使用 column -s, -t < 文件路径 | less -#2 -N -S 命令来以表格形式查看结果。"
+  echo "以下是一个 fio 命令示例，作为如何使用本脚本运行测试的提醒："
+  echo "fio --name=test --filename=/dev/sdc --size=10G --runtime=300 --ioengine=libaio --rw=write --bs=4k --numjobs=1 --iodepth=128 --group_reporting --direct=1 --output-format=json --output=./fio_results/test_write_4k_numjobs1.json"
 
   read -p "请输入测试磁盘路径 [/dev/sdc]: " input
   FILENAME=${input:-$FILENAME}

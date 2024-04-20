@@ -9,8 +9,8 @@ touch "$LOG_FILE"    # 创建日志文件
 # 输出日志信息到日志文件
 exec &>> "$LOG_FILE"
 
-echo "每日巡检开始！"
+echo "$(date) 每日巡检开始！"
 
 #待补充
 
-echo "每日巡检结束！"
+echo "$(date) 每日巡检结束！"

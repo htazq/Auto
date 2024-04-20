@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 设置日志
-LOG_DIR="~/dailylog"
+LOG_DIR="/root/dailylog"
 LOG_FILE="$LOG_DIR/$(date +'%Y-%m-%d_%H-%M-%S').log"
 
 mkdir -p "$LOG_DIR"  # 创建日志目录

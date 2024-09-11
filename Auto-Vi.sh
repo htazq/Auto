@@ -1,39 +1,40 @@
 #!/bin/bash
 
-sudo apt-get remove -y vim-common
+# 检查用户是否是 root
+if [[ $EUID -ne 0 ]]; then
+   echo "请以 root 用户身份运行此脚本。"
+   exit 1
+fi
 
-sudo apt-get install -y vim-full
+# 删除 vim-tiny 并安装 vim
+apt-get remove -y vim-tiny
 
-sudo apt-get install -y vim
+# 检查系统版本（用于不同系统的兼容性）
+if [ -f /etc/debian_version ]; then
+    # Debian 或 Ubuntu 系统
+    apt-get update
+    apt-get install -y vim
+elif [ -f /etc/redhat-release ] || [ -f /etc/centos-release ]; then
+    # CentOS 或 RHEL 系统
+    yum install -y vim
+else
+    echo "不支持的操作系统。"
+    exit 1
+fi
 
 # 判断是否已存在 .vimrc 文件
-if [ -e ~/.vimrc ]
-then
-    echo "The .vimrc file already exists. Checking and adding missing configurations."
+if [ -e ~/.vimrc ]; then
+    echo ".vimrc 文件已存在，正在检查和添加缺失的配置。"
 
     # 判断并添加缺失的配置行
-    if ! grep -q "set nocompatible" ~/.vimrc
-    then
-        echo "set nocompatible" >> ~/.vimrc
-    fi
+    grep -q "set nocompatible" ~/.vimrc || echo "set nocompatible" >> ~/.vimrc
+    grep -q "set backspace=2" ~/.vimrc || echo "set backspace=2" >> ~/.vimrc
+    grep -q "set number" ~/.vimrc || echo "set number" >> ~/.vimrc
+    grep -q "syntax on" ~/.vimrc || echo "syntax on" >> ~/.vimrc
 
-    if ! grep -q "set backspace=2" ~/.vimrc
-    then
-        echo "set backspace=2" >> ~/.vimrc
-    fi
-
-    if ! grep -q "set number" ~/.vimrc
-    then
-        echo "set number" >> ~/.vimrc
-    fi
-
-    if ! grep -q "syntax on" ~/.vimrc
-    then
-        echo "syntax on" >> ~/.vimrc
-    fi
 else
     # 如果文件不存在，则创建并写入配置
-    echo "Creating .vimrc file with initial configurations."
+    echo "创建 .vimrc 文件并添加初始配置。"
     cat <<EOF > ~/.vimrc
 set nocompatible
 set backspace=2

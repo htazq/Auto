@@ -28,6 +28,7 @@ if [ -e ~/.vimrc ]; then
 
     # 判断并添加缺失的配置行
     grep -q "set nocompatible" ~/.vimrc || echo "set nocompatible" >> ~/.vimrc
+    grep -q "set mouse-=a" ~/.vimrc || echo "set mouse-=a" >> ~/.vimrc
     grep -q "set backspace=2" ~/.vimrc || echo "set backspace=2" >> ~/.vimrc
     grep -q "set number" ~/.vimrc || echo "set number" >> ~/.vimrc
     grep -q "syntax on" ~/.vimrc || echo "syntax on" >> ~/.vimrc

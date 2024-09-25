@@ -1,0 +1,17 @@
+[Unit]
+Description=iVentoy PXE Booter
+Documentation=https://www.iventoy.com
+Wants=network-online.target
+
+[Service]
+Type=forking
+Environment=IVENTOY_API_ALL=1
+Environment=IVENTOY_AUTO_RUN=1
+Environment=LIBRARY_PATH=/mnt/iso/iventoy-1.0.20/iventoy/lib/lin64
+Environment=LD_LIBRARY_PATH=/mnt/iso/iventoy-1.0.20/iventoy/lib/lin64
+ExecStart=/mnt/iso/iventoy-1.0.20/lib/iventoy -R start
+WorkingDirectory=/mnt/iso/iventoy-1.0.20
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

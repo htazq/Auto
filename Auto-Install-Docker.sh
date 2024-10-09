@@ -29,8 +29,13 @@ if [[ "$OS_ID" == "debian" || "$OS_ID" == "ubuntu" ]]; then
   apt update
 
   # 安装 Docker 和 Docker Compose
-  apt install -y docker-ce docker-ce-cli containerd.io docker-compose
+  apt install -y docker-ce docker-ce-cli containerd.io
 
+  # 安装最新版本的 Docker Compose
+  DOCKER_COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+  curl -L "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  chmod +x /usr/local/bin/docker-compose
+  
   # 启动 Docker 服务并设置开机自启动
   systemctl start docker
   systemctl enable docker
@@ -43,8 +48,12 @@ elif [[ "$OS_ID" == "centos" ]]; then
   yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 
   # 安装 Docker 和 Docker Compose
-  yum install -y docker-ce docker-ce-cli containerd.io docker-compose
-
+  yum install -y docker-ce docker-ce-cli containerd.io 
+  
+  # 安装最新版本的 Docker Compose
+  DOCKER_COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+  curl -L "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  chmod +x /usr/local/bin/docker-compose
   # 启动 Docker 服务并设置开机自启动
   systemctl start docker
   systemctl enable docker

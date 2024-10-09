@@ -15,16 +15,20 @@ if [[ "$OS_ID" == "debian" || "$OS_ID" == "ubuntu" ]]; then
   # Debian 和 Ubuntu 系统
   apt update
   apt upgrade -y
-
+  
   # 安装必要的包
   apt install -y curl gnupg2 software-properties-common
-
-  # 添加 Docker GPG 密钥
-  curl -fsSL https://download.docker.com/linux/$OS_ID/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-
-  # 添加 Docker APT 源
+  
+  # 检查 GPG 密钥文件是否已经存在，如果不存在则下载并生成
+  if [[ ! -f /usr/share/keyrings/docker-archive-keyring.gpg ]]; then
+    curl -fsSL https://download.docker.com/linux/$OS_ID/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+  else
+    echo "GPG keyring already exists, skipping download."
+  fi
+  
+  # 添加 Docker APT 源（每次都会添加或覆盖）
   echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/$OS_ID $(grep VERSION_CODENAME /etc/os-release | cut -d '=' -f 2) stable" > /etc/apt/sources.list.d/docker.list
-
+  
   # 更新软件包列表
   apt update
 

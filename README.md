@@ -2,7 +2,12 @@
 
 注意以下仅适用于debian、ubuntu系统
 
-食用方法：     
+食用方法：
+
+Debian13优化脚本
+```
+bash <(wget -qO- -o- https://raw.githubusercontent.com/htazq/Auto/main/optimization.sh)
+```
 
 全自动安装Docker以及解决vi
 ```
